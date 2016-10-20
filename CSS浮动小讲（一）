@@ -1,0 +1,55 @@
+    面对CSS浮动（float），作为新人难免都会有些困惑，我今天总结了一点小知识，希望能够为自己和阅读者有一些帮助。
+    
+  问题如下，在不设置固定高度的div内，为实现自适应多栏布局，在内容中都采用了float浮动，最后发现div父元素的高度坍塌了，背景色不见了，怎么办？
+    
+  文本如下：
+    
+    <style>
+      .main{
+          background-color:#ccc;
+          }
+      .img{
+        float:left;
+          }
+       p{
+       float:right;
+        }
+    </style>
+
+    <body>
+         <div class="main">
+             <img src=“#”/>
+            <p>.........</p>
+         </div>
+    </body>  
+    
+  解决方法一：在div内最底部加一个元素，其清除浮动
+      
+      <div class="main">
+        <img src="#"/>
+        <p>......</p>
+        
+        <br class="xx"> //添加的元素
+      </div>
+      
+      然后在CSS样式中设置就OK啦
+       .xx{
+          clear:both;
+          }
+          
+    方法二：不修改body内部，在CSS中设置。
+    .main{
+        content="";
+        height:0;
+        display:block;
+        visibility:hidden;
+        clear:both;
+        }
+        
+
+    
+    
+    
+    
+ 
+      
