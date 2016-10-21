@@ -1,0 +1,36 @@
+应用场景如下：
+  在一个水平方向上，有多个div容器，且不设置高度，被各自内部的内容填充后，这几个div容器的高度参次不齐，如何不借助CSS3就能达到这几个容器高度统一呢？那么请看代码
+  
+  body内容如下,假设有三个
+    <div class="box">   /*第一个容器*/
+        <p>...省略..</p>
+        <div class="bottom"></div>
+     </div>
+     
+      <div class="box">   /*第二个容器*/
+        <p>...省略..</p>
+        <div class="bottom"></div>
+     </div>
+     
+      <div class="box">    /*第三个容器*/
+        <p>...省略..</p>
+        <div class="bottom"></div>
+     </div>
+     
+     解决方法如下
+     .box{
+      width:200px;
+      padding-bottom:110%;   
+      margin-bottom:-109%
+      border:1px solid #ccc;
+      }
+      
+      .bottom{
+        height:1%;
+        width:200px;
+        margin-bottom:0;
+        border-bottom:1px solid #ccc;  /*颜色与box的边框色相同*/
+        }
+        
+       如果不要边框，可以不需要bottom这个div
+     
