@@ -1,0 +1,80 @@
+  下面要实现一组动画，当点击按钮的时候，页面会回到顶部，且速度是越来越慢的回去。当当前浏览页面的高度小于一定值的时候，该按钮不会显示；
+  
+  当页面滚动时候，滚动鼠标滚轮，会停止页面滚动效果；
+  
+  代码如下：
+  
+  <!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+	.box{
+		margin:0 auto;
+		width:1000px;
+		}
+	#btn{
+		width:40px;
+		height:40px;
+		background:url(x2.png);
+		position:fixed;
+		left:50%;
+		margin-left:500px;
+		bottom:50px;
+		display:none;
+		}
+	#btn:hover{
+		background-position:0 -40px;
+		}
+	
+</style>
+</head>
+
+<body>
+	<div class="box">
+		<img src="x1.jpg"/>
+	</div>
+    	<a href="javascript:;" id="btn"></a>
+      
+<script>
+	window.onload=function(){
+		var btn=document.getElementById("btn");
+		var timer=null;
+		
+		window.onscroll=function(){    //隐藏按钮、停止滚动函数
+		var otop=document.documentElement.scrollTop||document.body.scrollTop;
+			if(otop>=600){
+				btn.style.display="block";
+				}else{
+				btn.style.display="none";	
+					}		
+			if(istoop){
+				clearInterval(timer); //停止滚动，看解释
+				}
+				istoop=true;	
+			}
+			
+		btn.onclick=function(){
+			timer=setInterval(function(){
+			var otop=document.documentElement.scrollTop||document.body.scrollTop;
+			var imove=Math.ceil(otop/8);
+			document.documentElement.scrollTop=document.body.scrollTop=otop-imove;
+				istoop=false;  
+				if(otop==0){
+					clearInterval(timer);
+					}
+				},30)
+			}	
+		}
+		
+</script>        
+</body>
+</html>
+
+当右侧滚动的时候，就会触发一次window.onscroll函数，不需要清除定时器，所以就要返回一个if为false的结果，所以if()内的布尔值就该为false,
+所以在onclick内部定义了该值，全局变量。
+
+当鼠标滚动时，第二次触发window.onscroll函数，需要清除定时器，所以就要返回一个if为true的结果，所以当执行完第一次的时候，要在后面为
+这个istoop改为true;方便第二次操作停止滚动。
+内部
