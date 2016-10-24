@@ -1,0 +1,87 @@
+单选框可以用radio来实现，但是框的样式泰国单一，今天就做一个可以个性化的单选框，并结合JS一起来实现。
+
+下面来解读这个代码，其实思路很简单，给dd标签前添加一个b元素，为b元素添加背景图，然后采用雪碧图效应，进行鼠标滑过点击改变背景的位置，来实现动态效果。
+添加一个a标签，实现伪类鼠标滑过改变样式，然后JS中进行判断，判断该b块是否被选中，点击选中的话就添加一个类，实现伪类效果。
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+	*{
+		margin:0;
+		padding:0；
+		}
+	dt,dd{
+		float:left;
+		margin:20px 20px;
+		
+		}
+	.box{
+		width:350px;
+		height:40px;
+		border:1px solid #ccc;
+		position:relative;
+		}
+	dl{
+		height:10px;
+		line-height:10px;
+		
+		}	
+	a{
+		text-decoration:none;
+		color:#000;
+		position:relative;
+		display:block;
+		}
+	b{	
+		display:block;
+		position:absolute;
+		top:-7px;
+		left:-25px;
+		width:20px;
+		height:20px;
+		background:url(images/radiobutton.gif) no-repeat -14px -17px;
+		}	
+	a:hover{
+		color:red;
+		text-decoration:underline;
+		}	
+	.box a:hover b{
+		background-position:-14px -117px;
+		}	
+	/* .box a:focus b{
+		background-position:-14px -217px;
+		 }	 */
+	.box .sle b, .box .sle a:hover b{
+		background-position:-14px -217px;
+		}	 
+</style>
+</head>
+
+<body>
+<div class="box" id="box1">
+	<dl >
+    	<dt>运输类型</dt>
+    	<dd class="sle"><a href="#" onclick="show(0)";><b></b>全部</a></dd>
+        <dd><a href="#" onclick="show(1)";><b></b>京东</a></dd>
+        <dd><a href="#" onclick="show(2)";><b></b>其它</a></dd>
+    </dl>
+</div>
+<script>
+	function show(index){
+		var odd=document.getElementById("box1").getElementsByTagName("dd")
+			for(var i=0;i<odd.length;i++){
+					if(i==index){
+						odd[i].className="sle"
+							}else{
+							odd[i].className=null;
+								}
+					 }
+				}
+	
+
+</script>
+</body>
+</html>
