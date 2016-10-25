@@ -1,0 +1,127 @@
+ 今天要实现的是，模仿必应网站进行搜索，设计出搜索框，自定义搜索框、按钮的样式，且有css、html、javascript实现文本框输入，将会出现候选搜索结果，
+ 当鼠标单击其它地方的时候，候选框消失。代码如下：
+ 
+样式如下：
+<style type="text/css">
+	*{
+		margin:0;
+		padding:0;
+		}
+	body{
+		background:#333;
+		}
+	.box{
+		background:url(images/%E5%BF%85%E5%BA%94/river.jpg);
+		width:1300px;
+		height:662px;
+		margin:0 auto;
+		}
+	.search{
+		position:absolute;
+		left:350px;
+		top:200px;
+		}	
+	.search img{
+		width:107px;
+		height:53px;
+		float:left;
+		}
+	.search-form{
+		float:left;
+		height:35px;
+		background:#fff;
+		margin:10px 20px;
+		}
+	.search-form input{
+		border:none;
+		}	
+	.search-form .search-text{
+		width:300px;	
+		height:30px;
+		outline:none;
+		line-height:30px;
+		float:left;
+		margin:3px 0;
+		font-size:1.15em;
+		}
+	.search-form .search-submit{
+		background:url(images/%E5%BF%85%E5%BA%94/search-button.png) no-repeat;
+		width:29px;
+		height:29px;
+		float:left;
+		margin:3px 0;
+		}	
+	#select{
+		position:absolute;
+		left:477px;
+		top:245px;
+		}	
+	#selectLi{
+		width:290px;
+		background:#fff;
+		list-style:none;
+		border:1px solid #ccc;
+		line-height:30px;
+		padding:5px;
+		display:none;
+		}	
+	#selectLi li:hover{
+		cursor:pointer;
+		color:#c00;
+		text-decoration:underline;
+		background:#ccc;
+		}	
+</style>
+</head>
+
+<body>
+	<div class="box">
+    	<div class="search" id="search1">
+        	<img src="images/必应/logo.png"/>
+        	<form action="#" method="get" name="search-input" class="search-form">
+            	<input type="text" class="search-text" id="search2"/>
+                <input type="submit"  class="search-submit" value="" />
+            </form>
+    	</div>
+	</div>
+    <div id="select">
+    	<ul id="selectLi">
+        	<li>搜索结果1</li>
+        	<li>搜索结果2</li>
+            <li>搜索结果3</li>
+        	<li>搜索结果4</li>
+            <li>搜索结果5</li>
+        	<li>搜索结果6</li>
+        </ul>
+    </div>
+ <script src="script/jquery-3.1.1.min.js"> </script> 
+ <script>
+ /*	$("#search1").keyup(function(){
+		$("#selectLi").show();
+		})
+	$(document).click(function(){
+		$("#selectLi").hide();
+		})	 */
+	var getDom=function(id){
+		return document.getElementById(id);
+		}
+	var addEvent=function(id,event,fn){
+		var el=getDom(id)||document;
+		if(el.addEventListener){
+			el.addEventListener(event,fn,false);
+			}
+			else if(el.attachEvent){
+				el.attachEvent("on"+event,fn);
+				}
+		}	
+			
+	addEvent("select2","keyup",function(){
+		getDom("selectLi").style.display="block";
+		});	
+	addEvent("document","click",function(){
+		getDom("selectLi").style.display="none";
+		});	
+
+ </script>
+</body>
+
