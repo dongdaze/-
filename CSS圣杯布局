@@ -1,0 +1,68 @@
+ 在网页中有大量内容需要加载的时候，总希望主内容先呈现出来，且在DOM流中的顺序也放在前面，所以就有了圣杯布局和双飞翼的两种三列布局技巧，下面总结一下。
+ 
+ 圣杯布局：
+  <body内部>
+  
+<div class="header">Header</div>
+  <div class="bd">
+    <div class="main">Main</div>
+    <div class="left">Left</div>
+    <div class="right">Right
+   </div>
+</div>
+
+  现在加CSS样式
+    .left{
+       background: #E79F6D;
+         width:190px;
+         float:left；
+        }
+        .main{
+            background: #D6D6D6;
+            width:100%;
+            float:left;
+        }
+        .right{
+            background: #77BBDD;
+            width:190px;
+            float:left;
+        }
+  
+     这是开始的样式，main在最上面，独占一行，下面分别是left、right，然后把left提到main的左边,right提到main的右边
+    .left{
+       background: #E79F6D;
+       width:190px;
+       float:left；
+       margin-left:-100%;
+        }
+    .right{
+       background: #77BBDD;
+       width:200px;
+       float:left;
+       margin-left:-200px;
+        } 
+        
+        然后就发现了left、right挡住了main的部分，所以在这三个div的父容器上加一个padding
+   .bd{
+      padding-left:190px;
+      padding-right:200px;
+        }
+        
+       这样就这三个容器的左边和右边分别留出了190和200 像素的宽度，接着为left、right设置一个左、右偏移即可
+    .left{
+       background: #E79F6D;
+       width:190px;
+       float:left；
+       margin-left:-100%;
+       position:relative;
+       left:-190px;
+        }
+    .right{
+       background: #77BBDD;
+       width:200px;
+       float:left;
+       margin-left:-200px;
+       position:relative;
+       right:-200px;
+        }   
+       
