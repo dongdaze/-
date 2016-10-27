@@ -1,0 +1,63 @@
+今天看了一个例子，突发奇想，想在鼠标移到某个元素上，实现新增一个提示说明，且鼠标只有放在这个提示说明上，且在此移走的时候，才会消失，
+不会出现鼠标移开那个要触发的元素，这个提示框就消失。
+
+同时也尝试了用JS在dom树中增加元素。
+
+html代码如下：
+<div id="main">
+    <h2>提示信息的特技</h2>
+
+    <p>ToolTip效果还是比较有趣的，今天我也尝试设置一下，这个效果的可玩性还是很高的。假如你点击：<a class="tooltip" id="tooltip1">我</a>，看看会发生什么？
+    </p>
+</div>
+
+下面省略部分css样式，只把提示框的样式写出来
+
+      .tooltip-box {
+            display: block;
+            background: #fff;
+            line-height: 1.6;
+            border: 1px solid #66CCFF;
+            color: #333;
+            padding: 20px;
+            font-size: 12px;
+            border-radius: 5px;
+            overflow: auto;
+			position:absolute;
+        }
+        
+  重点来了，下面是JS的实现方法：
+  
+  <script>
+var newdivclass="tooltip-box";
+//封装函数，实现传参的时候，就能设置新增节点的样式。这是一个文本提示框，多了的话考虑优化代码下，效果还是不错滴
+function showDiv(obj,id,html,width,height){   
+	if(document.getElementById(id) == null){
+		var newdiv;
+		var newdiv=document.createElement("div");
+			newdiv.className=newdivclass;
+			newdiv.id=id;
+			newdiv.innerHTML=html;
+			obj.appendChild(newdiv);
+			newdiv.style.height=height+"px";
+			newdiv.style.width=width+"px";
+			var oleft=obj.offsetLeft;
+			var otop=obj.offsetTop;
+			newdiv.style.left=oleft+"px";
+			newdiv.style.top=otop+20+"px";
+			newdiv.onmouseout=function(){
+				setTimeout(function(){
+				document.getElementById(id).style.display="none";
+					},500)
+				}
+		}else{
+			document.getElementById(id).style.display="block";
+		}
+	}
+// 绑定事件，当鼠标移入的时候出发的函数	
+var t=document.getElementById("tooltip1");
+ t.onmouseover=function(){
+	 showDiv(this,"t1","鼠标绕地球一周再移动到我身上看看",100,40);
+	 }
+
+</script>
