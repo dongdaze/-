@@ -1,0 +1,86 @@
+  今天学习了一个模拟淘宝、京东商品展示的时候，鼠标放在上面会出现放大效果的js动画，仔细琢磨了下，也把相应的公式写出来了，然后仔细的做了下，
+其实就是主要的知识点，
+
+比如：
+  1.onmousemove是鼠标移动事件；
+  2.offsetleft获得相对于到父元素边框的距离； 
+  3.offsetWidth获得自身的宽度； 
+  4.offsetleft与style.left的区别是，offsetleft返回数组，且只可读；style.left返回数值，且可以读写；
+  5.event.clientX是获得鼠标当前距离屏幕的x轴距离；event.clientY是获得鼠标当前距离屏幕的Y轴距离；
+ 
+ 还有实现这个效果的计算方式，和思路
+ 
+ <body>
+<div id="demo">
+    <div id="small-box">
+        <div id="mark"></div>
+        <div id="float-box"></div>
+        <img src="macbook-small.jpg"/>
+    </div>
+    <div id="big-box">
+        <img src="macbook-big.jpg"/>
+    </div>
+</div>
+<script>
+	window.onload=function(){
+  
+		    //从DOM中取出元素
+	      	var objDemo = document.getElementById("demo");
+          var objSmallBox = document.getElementById("small-box");
+          var objMark = document.getElementById("mark");
+          var objFloatBox = document.getElementById("float-box");
+          var objBigBox = document.getElementById("big-box");
+          var objBigBoxImage = objBigBox.getElementsByTagName("img")[0];
+          
+		  //鼠标滑过触发的事件
+		   objMark.onmouseover = function () {   
+           objFloatBox.style.display = "block"
+           objBigBox.style.display = "block"
+            }
+            
+			 //鼠标滑出触发的事件
+		 objMark.onmouseout = function () {
+           objFloatBox.style.display = "none"
+           objBigBox.style.display = "none"
+            }
+            
+			 //鼠标移动触发的事件	
+		 objMark.onmousemove = function (ev) {
+			   //兼容多个浏览器的event参数模式
+				var _event = ev || window.event; 
+        
+         //求出放大镜距离左侧小图片div的宽度，求出放大镜距离上侧小图片div的宽度
+        var left = _event.clientX - objDemo.offsetLeft - objSmallBox.offsetLeft - objFloatBox.offsetWidth / 2;  
+        var top = _event.clientY - objDemo.offsetTop - objSmallBox.offsetTop - objFloatBox.offsetHeight / 2;   
+        
+        //判断放大镜区域是否溢出小图片div，溢出到左边就归零，溢出到右边就取可移动距离的最大宽度
+				if(left<0){       
+					left=0;
+					}else if(left>(objMark.offsetWidth - objFloatBox.offsetWidth)){
+						 left=objMark.offsetWidth - objFloatBox.offsetWidth;
+						}
+                        //同上
+				if(top<0){
+					top=0;
+					}else if(top>(objMark.offsetHeight - objFloatBox.offsetHeight)){
+						 top=objMark.offsetHeight - objFloatBox.offsetHeight;
+						}
+            
+			  //给放大镜添加实时移动的距离
+				 objFloatBox.style.left = left + "px";  
+         objFloatBox.style.top = top + "px";
+			
+		
+			  //计算移动距离在小盒子内所占的比例
+        
+				var percentX = left / (objMark.offsetWidth - objFloatBox.offsetWidth);
+        var percentY = top / (objMark.offsetHeight - objFloatBox.offsetHeight);
+        
+        //根据比例算出大盒子下图片应该移动的距离
+        
+        objBigBoxImage.style.left = -percentX * (objBigBoxImage.offsetWidth - objBigBox.offsetWidth) + "px";
+         objBigBoxImage.style.top = -percentY * (objBigBoxImage.offsetHeight - objBigBox.offsetHeight) + "px";
+			}
+		}
+</script>
+</body>
