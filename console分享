@@ -1,0 +1,34 @@
+最近在敲代码的时候，发现console真是个好东西，今天也拿来几个，可能以后常用的保存起来，封装 console，哈哈
+
+  console.log()打印字符串
+  
+  console.info()打印提示信息
+  
+  console.warn()打印警告消息
+  
+  console.error()打印错误消息
+  
+  console.debug()打印调试信息
+  
+  还能利用console.log(console)打印自己
+  
+  console.clear() 清除控制台
+  
+  还能分组打印输出
+  console.group(“”)
+  console.log(“”);
+  console.log(“”);
+  console.grounpEnd();
+  
+  console.table() 显示关联数组的信息
+  
+  console.dir  将一个JS对象的所有属性和属性值显示为可交互的列表
+  
+  console.dirhtml   来查看页面中对应元素的html/xml的内容
+  
+  还能性能测试 console.time()  console.timeEnd() 计算运行程序所花的时间
+  将结果输出在profile
+  
+  console.conunt 来统计一个函数或者被调用了几次
+  
+  先总结这么多吧，以后用起来觉得哪个方便，就再补充
