@@ -1,0 +1,31 @@
+  最近在用定时器做一些小动画，发现缓冲运动在体验上是很好的，今天写了不用CSS3、JQ，而用原生JS完成。
+  
+  代码如下：
+  
+    var oDiv=document.getElementById("div1"); //从DOM中取div元素
+    var timer=null; //声明一个变量，来做定时器
+    var speed=0;    //声明一个要加的速度
+    oDiv.onmouseover=function(){    //鼠标滑过事件
+      move(0);
+    }
+    oDiv.onmouseout=function(){     //鼠标移开事件
+      move(-200);
+    }
+
+    function move(target){    //函数（参数为物体运动的目标值）
+      clearInterval(timer);   //执行参数时候，先清空当下的定时器
+      timer=setInterval(function(){  //设置定时器
+      
+        var speed=(target-oDiv.offsetLeft)/15;  //让物体的速度随着具体目标值越来越近而减慢
+        
+        speed=speed>0?Math.ceil(speed):Math.floor(speed); //解决最后距离除不尽的问题，根据移动的方向分别取整
+        
+        if(oDiv.offsetLeft<target){     //根据判断，做出移动的方向
+          oDiv.style.left=oDiv.offsetLeft+speed+"px";
+        }
+        if(oDiv.offsetLeft>target){
+          oDiv.style.left=oDiv.offsetLeft+speed+"px";
+        }
+      },30)
+    }
+  }	
