@@ -1,0 +1,53 @@
+    最近在做一些页面的布局，浮动布局所带来的父元素的高度坍塌问题，之前我CSS浮动小讲，自己也总结了一下。   
+ 但是我在想，overflow:hidden; 和clearfix都是清除浮动，但有什么区别呢？
+ 
+ 
+  先说说overflow:hidden； 这个功能用的比较多，子元素超出父元素容器大小的时候，可以用overflow:hidden，只留下
+相对于父容器大小的显示空间，多余的将被自动裁剪；
+
+
+  但是！！！用这个去解决子元素的float浮动，按道理浮动元素脱离文档流，父元素的高度坍塌后，子元素超出的部分，将会
+被裁剪掉，但是并没有，而是父元素的高度回来了，浮动元素被包进去了，为什么呢？
+
+  原来这就叫做父容器BFC，它有几个特性：
+  
+    1.阻止垂直外边距折叠（用在父子元素上挺好）
+    2.BFC不会重叠浮动元素。
+    3.BFC可以包含浮动。（原来是这样，那么问题就解决了）
+    
+  那形成BFC的方法有什么呢？
+    1.float为 left/right
+    2.overflow为 hidden/auto/scroll
+    3.display为 table-cell/table-caption/inline-block
+    4.position为 absolute/fixed
+    
+  所以让父容器形成BFC就可以达到清除效果。
+  
+  还有一种就是之前说的clear属性,加伪类可以明白是清除前面的浮动，父容器内有不浮动的内容，自然就包住了，但是zoom是什么呢？
+  
+  .clearfix{
+    *zoom:1;
+  }
+  .clear:after{
+    content:"";
+    display:table;
+    clear:both;
+  }
+  
+  那就要先说一下IE6，7的hasLayout，当这个属性的值为false时候，元素的尺寸和位置由最近拥有布局的祖先元素控制（自己被控制）。
+当元素的hasLayout属性值为true的时候会达到和BFC类似的效果，元素负责本身及其子元素的尺寸设置和定位（自己主动控制）。
+
+  那就好办了，hasLayout为true的条件知道就好了
+  
+  1. position: absolute 
+  2.float: left/right
+  3.display: inline-block
+  4.width: 除 “auto” 外的任意值
+  5.height: 除 “auto” 外的任意值
+  6.zoom: 除 “normal” 外的任意值
+  7.writing-mode: tb-rl
+  
+  也就是说清除浮动有两种办法：1是让父元素形成BFC，另一种是用别的元素清除它之前的浮动元素，也就是clearfix，为了兼容IE的hasLayout，
+通常再加一个zoom:1。
+
+  好了，这就是以上自己对今天出现的问题及解决办法的总结。
